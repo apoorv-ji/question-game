@@ -69,7 +69,31 @@ button {
     <div id="message"></div>
 </div>
 
-<script>
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAqkgSXj9wiDyXs_aVYOI6R4eAmT7FTy_M",
+  authDomain: "question-game-af745.firebaseapp.com",
+  projectId: "question-game-af745",
+  storageBucket: "question-game-af745.firebasestorage.app",
+  messagingSenderId: "7082471650",
+  appId: "1:7082471650:web:e82757e2cf241821ff2ebb",
+  measurementId: "G-11TM0N7KYE"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 const wrongBtn = document.getElementById("wrongBtn");
 const correctBtn = document.getElementById("correctBtn");
 const message = document.getElementById("message");
@@ -79,19 +103,29 @@ function moveButton() {
     const maxX = container.clientWidth - wrongBtn.offsetWidth;
     const maxY = container.clientHeight - wrongBtn.offsetHeight;
 
-    const randomX = Math.floor(Math.random() * maxX);
-    const randomY = Math.floor(Math.random() * maxY);
+    wrongBtn.style.left =
+        Math.floor(Math.random() * maxX) + "px";
 
-    wrongBtn.style.left = randomX + "px";
-    wrongBtn.style.top = randomY + "px";
+    wrongBtn.style.top =
+        Math.floor(Math.random() * maxY) + "px";
 }
 
 wrongBtn.addEventListener("mouseover", moveButton);
-wrongBtn.addEventListener("click", moveButton);
 
-correctBtn.addEventListener("click", () => {
-    message.innerHTML = "I knew it! ❤️";
+correctBtn.addEventListener("click", async () => {
+
+    await addDoc(
+        collection(db, "responses"),
+        {
+            answer: "Yes",
+            timestamp: new Date(),
+            userAgent: navigator.userAgent
+        }
+    );
+
+    message.innerHTML = "I knew it ❤️";
 });
+
 </script>
 
 </body>
