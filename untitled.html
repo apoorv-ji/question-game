@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Question Game</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+    width: 700px;
+    height: 400px;
+    position: relative;
+}
+
+h1 {
+    margin-bottom: 50px;
+}
+
+button {
+    padding: 15px 35px;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+}
+
+#correctBtn {
+    background: #4caf50;
+    color: white;
+    margin-right: 20px;
+}
+
+#wrongBtn {
+    background: #f44336;
+    color: white;
+    position: absolute;
+    left: 380px;
+    top: 180px;
+    transition: all 0.15s ease;
+}
+
+#message {
+    margin-top: 50px;
+    font-size: 22px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Soorrryyyyyyyy, Please Manjaaa Cuutttuuuuu!!! 🥹</h1>
+
+    <button id="correctBtn">Accepted</button>
+    <button id="wrongBtn">Noooooo</button>
+
+    <div id="message"></div>
+</div>
+
+<script>
+const wrongBtn = document.getElementById("wrongBtn");
+const correctBtn = document.getElementById("correctBtn");
+const message = document.getElementById("message");
+const container = document.querySelector(".container");
+
+function moveButton() {
+    const maxX = container.clientWidth - wrongBtn.offsetWidth;
+    const maxY = container.clientHeight - wrongBtn.offsetHeight;
+
+    const randomX = Math.floor(Math.random() * maxX);
+    const randomY = Math.floor(Math.random() * maxY);
+
+    wrongBtn.style.left = randomX + "px";
+    wrongBtn.style.top = randomY + "px";
+}
+
+wrongBtn.addEventListener("mouseover", moveButton);
+wrongBtn.addEventListener("click", moveButton);
+
+correctBtn.addEventListener("click", () => {
+    message.innerHTML = "I knew it! ❤️";
+});
+</script>
+
+</body>
+</html>
